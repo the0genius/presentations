@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "powerpoint": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@sbroenne/mcp-server-powerpoint@latest"]
+    }
+  }
+}

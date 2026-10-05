@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "powerpoint-mcp": {
+      "source": "sbroenne/mcp-server-powerpoint",
+      "sourceType": "github",
+      "skillPath": "skills/powerpoint-mcp/SKILL.md",
+      "computedHash": "0c1061d3b57b4be096576556cfa8338ac9f97d05a20665d3239a5e45b5e66f8c"
+    }
+  }
+}

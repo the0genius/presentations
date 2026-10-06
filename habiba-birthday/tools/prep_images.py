@@ -18,13 +18,12 @@ LUMA = np.array([0.2126, 0.7152, 0.0722])
 
 def grade(rgb):
     x = rgb.astype(np.float32) / 255.0
-    # soft filmic S-curve
-    x = x - 0.10 * np.sin(2 * np.pi * x) / (2 * np.pi)
-    # plum-tinted lifted blacks, warm highlights
-    x = x * 0.965 + np.array([0.028, 0.012, 0.040]) * (1 - x) ** 2
-    x = x * (1 + np.array([0.03, 0.008, -0.02]) * x ** 2)
+    # soft filmic S-curve, neutral-warm lifted blacks, warm highlights
+    x = x - 0.085 * np.sin(2 * np.pi * x) / (2 * np.pi)
+    x = x * 0.975 + np.array([0.020, 0.016, 0.013]) * (1 - x) ** 2
+    x = x * (1 + np.array([0.022, 0.006, -0.016]) * x ** 2)
     lum = (x @ LUMA)[..., None]
-    x = lum + (x - lum) * 1.08
+    x = lum + (x - lum) * 1.03
     return np.clip(x, 0, 1)
 
 
@@ -56,6 +55,8 @@ for p in sorted(src.glob("*.jpg")):
     w = np.clip((lum - 0.58) / 0.42, 0, 1) ** 1.6
     sat = a.max(-1) - a.min(-1)
     w = np.maximum(w, np.clip((sat - 0.45) * 1.5, 0, 1) * np.clip(lum * 1.6, 0, 1) * 0.8)
-    b = Image.fromarray((a * w[..., None] * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(9))
+    # warm film halation: highlights bleed a red-orange glow
+    hal = (w[..., None] * (0.55 * a + 0.45 * lum[..., None]) * np.array([1.0, 0.6, 0.4])).clip(0, 1)
+    b = Image.fromarray((hal * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(9))
     b.save(out / f"{name}_bloom.jpg", quality=90)
     print(name, gi.size)

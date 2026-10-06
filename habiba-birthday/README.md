@@ -1,18 +1,28 @@
 # Habiba — a birthday film
 
-A 68-second, 1080×1920 (9:16) 60 fps birthday film, built entirely from code:
+A 66-second, 1080×1920 (9:16), 60 fps birthday film built entirely from code, in a modern editorial style:
+off-black, ivory and champagne; a wide grotesk (Archivo Expanded) with an italic serif (Instrument Serif);
+clean mask reveals with expo easing, real multi-sample motion blur, warm film halation and grain.
+On-screen text is limited to the name: everything else is carried by the pictures and the cut.
 
-- **Concept — "Every star has a story."** Midnight-velvet sky, champagne gold and neon pink
-  (the palette of her own birthday party). Intro → gold-foil title reveal → three chapters
-  (*The sweetest heart*, *The adventurer*, *The silly one*) → polaroid wall → "dear Habiba" finale → outro.
-- **Score** (`tools/music.py`): an original arrangement of *Happy Birthday to You* (public-domain melody),
-  synthesized from scratch with numpy/scipy — music box, FM electric piano, pads, strings, waltz groove,
-  a key change into the last chorus, and sound design (impact, risers, whooshes, neon buzz, polaroid drops).
-  3/4 at 100 BPM; every cut lands on a bar line and the on-screen lyric "dear… Habiba" lands on the sung beat.
-- **Picture** (`src/film.js`): a deterministic Canvas 2D engine — every frame is a pure function of time —
-  with parallax star field, aurora, bokeh, particle bursts, gold-foil typography with shimmer, neon text,
-  Ken Burns moves, framed cards, a choreographed polaroid wall and seven transition types.
-- **Render** (`tools/render.cjs`): headless Chromium (Playwright) renders frames in parallel; ffmpeg encodes.
+**Edit** (120 BPM: every cut lands on a beat or bar of the score)
+
+| time | shot |
+|---|---|
+| 0–4 | a hairline opens into a slit onto the neon "Happy Birthday" sign from her party, with a focus pull |
+| 4–8 | HA / BI / BA stacked, her photos cutting on the beat inside the letters; zoom through the "I" |
+| 8–32 | full-bleed shots and asymmetric split panels: slides, punch-ins, mask reveals |
+| 32–36 | contact sheet: all twelve photos land one per eighth note, then a dive into one cell |
+| 36–48 | the drop: aquarium, the silly duo, a four-up mosaic |
+| 48–56 | exposure bloom into the hero shot under the neon sign |
+| 56–66 | end title |
+
+**Score** (`tools/music.py`): original melodic house in D major, synthesized from scratch with numpy/scipy:
+felt piano, sidechained supersaw pads, plucked hook with ping-pong delay, house drums, sub bass,
+impacts, risers and UI ticks for the grid.
+
+**Picture** (`src/film.js`): a deterministic Canvas 2D engine (every frame is a pure function of time),
+rendered in parallel by headless Chromium (`tools/render.cjs`) and encoded with ffmpeg.
 
 ```
 ./build.sh   # needs the 12 photos in private/photos/
